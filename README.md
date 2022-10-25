@@ -1,2 +1,2 @@
-# excercice
+# Excercice
 Excercice d'intégration web
