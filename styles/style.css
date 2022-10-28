@@ -393,16 +393,17 @@ img {
     list-style-type: none;
     margin: 0;
     padding: 0 16px;
+    text-align: center;
 }
 
 .offer {
     background-color: var(--main-bg);
     border-radius:20px;
     box-shadow: 0 0 4px var(--shadow);
-    display: grid;
+    display: inline-grid;
     grid-template-columns: 1fr;
     grid-template-rows: 45px 1fr 100px;
-    margin:48px 0 32px 0;
+    margin:48px 6px 32px 6px;
     max-width: 325px;
     min-height: 375px;
     padding:0;
