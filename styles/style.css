@@ -217,6 +217,10 @@ img {
     z-index: 20;
 }
 
+.burger {
+    display: block;
+}
+
 .burger:before, .burger:after {
     border-bottom: 4px solid var(--secondary-color);
     border-radius: 4px;
@@ -239,6 +243,10 @@ img {
 }
 
 @supports selector(:has(*)) {
+    .main-nav:has(.menu-checkbox:checked) .burger {
+        margin-top: 12px;
+    }
+
     .main-nav:has(.menu-checkbox:checked) .burger:before {
         transform: translateY(0) skew(25deg) rotate(145deg);
     }
@@ -248,6 +256,21 @@ img {
         transform: translateY(-11px) translateX(1px) skew(-22deg) rotate(35deg);
         width: auto;
     }
+}
+
+/* fix for navigator without has: support */
+.open-menu .burger {
+    margin-top: 12px;
+}
+
+.open-menu .burger:before {
+    transform: translateY(0) skew(25deg) rotate(145deg);
+}
+
+.open-menu .burger:after {
+    float:none;
+    transform: translateY(-11px) translateX(1px) skew(-22deg) rotate(35deg);
+    width: auto;
 }
 
 /* products */
@@ -322,7 +345,7 @@ img {
     font-size: 0.9rem;
     font-weight: 600;
     grid-template-columns: 1fr;
-    grid-template-rows: 2fr 1fr;
+    grid-template-rows: 60px 1fr;
     height: 100%;
     justify-items: center;
     margin: auto;
@@ -532,13 +555,15 @@ img {
     .products-wrapper {
         align-items: center;
         display:grid;
-        grid-template-columns: 22% 1fr 22%;
+        grid-template-columns: 24% 1fr 20%;
         grid-template-rows: 1fr;
         max-width:90%;
         padding:0;
     }
 
     .heading-products {
+        align-self: flex-start;
+        min-height: 110px;
         padding: 16px 8px;
     }
 
@@ -550,6 +575,73 @@ img {
 
     .title-products strong {
         text-transform: uppercase;
+    }
+
+    .false-tabs li {
+        background-color: transparent;
+        border-radius: 0;
+        color: var(--txt-color);
+        cursor: pointer;
+        display: none;
+        padding: 4px 12px;
+        text-align: left;
+    }
+
+    .false-tabs li:before {
+        background: url(../images/picto-products-1.png) 0 -22px no-repeat;
+        background-size: 100% auto;
+        content:"";
+        display: inline-block;
+        height: 22px;
+        margin-right: 4px;;
+        vertical-align: middle;
+        width: 22px;
+    }
+
+    .btn-tab-active, .btn-tab:hover {
+        background-color: transparent;
+        color: var(--secondary-color);
+    }
+      
+    .false-tabs li:first-child {
+        color: var(--primary-color);
+        display: block;
+    }
+
+    .false-tabs li:first-child:before, .false-tabs li:hover:before {
+        background-position:0 0;
+    }
+
+    .false-tabs li:first-child:after {
+        background: url(../images/picto-arrow-b.png) center center no-repeat;
+        background-size: 100% auto;
+        content:"";
+        display: inline-block;
+        height: 11px;
+        margin-left: 4px;;
+        vertical-align: middle;
+        width: 11px;
+    }
+      
+    .false-tabs {
+        background-color:  var(--main-bg);
+        box-shadow: 0 0 6px var(--shadow);
+        display: inline-block;
+        padding: 0;
+        border-radius: 20px;
+        position: relative;
+    }
+      
+    .false-tabs li:hover {
+        color: var(--primary-color);
+    }
+
+    .false-tabs.open-false-tabs {
+        position: absolute;
+    }
+      
+    .false-tabs.open-false-tabs li {
+        display: block;
     }
 
     .products {

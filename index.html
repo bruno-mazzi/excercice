@@ -39,25 +39,25 @@
                     <div class="heading-products">
                         <h2 class="h2 title-products">Découvrez <br><strong>nos produits</strong></h2>
                         <ul class="false-tabs">
-                            <li class="btn-tab btn-tab-active">Particulier</li>
-                            <li class="btn-tab">Indépendant</li>
-                            <li class="btn-tab">Entreprise</li>
+                            <li class="btn-tab btn-tab-active" data-products="individual">Particulier</li>
+                            <li class="btn-tab" data-products="freelance">Indépendant</li>
+                            <li class="btn-tab" data-products="firm">Entreprise</li>
                         </ul>
                     </div>
                     <div>
-                        <ul class="products">
+                        <ul id="individual" class="products">
                             <li class="product"><a href="" class="icon-heart">Santé</a></li>
                             <li class="product"><a href="" class="icon-umbrella">Prévoyance</a></li>
                             <li class="product"><a href="" class="icon-piggy">Epargne et retraite</a></li>
                             <li class="product"><a href="" class="icon-money">Assurance</a></li>
                         </ul>
-                        <ul class="products sr-only">
+                        <ul id="freelance" class="products sr-only">
                             <li class="product"><a href="" class="icon-umbrella">Prévoyance</a></li>
                             <li class="product"><a href="" class="icon-heart">Santé</a></li>
                             <li class="product"><a href="" class="icon-money">Assurance</a></li>
                             <li class="product"><a href="" class="icon-piggy">Epargne et retraite</a></li>
                         </ul>
-                        <ul class="products sr-only">
+                        <ul id="firm" class="products sr-only">
                             <li class="product"><a href="" class="icon-piggy">Epargne et retraite</a></li>
                             <li class="product"><a href="" class="icon-heart">Santé</a></li>
                             <li class="product"><a href="" class="icon-money">Assurance</a></li>
@@ -70,7 +70,6 @@
             <section>
                 <h2 class="h2 title-offers">Nos offres du moment</h2>
                 <div class="slider">
-                    <div>
                         <ul class="offers">
                             <li class="offer">
                                 <p class="offer-head">Indépendant</p>
@@ -103,7 +102,6 @@
                                 <p class="tac"><a href=""  class="primary-btn">Demander mon tarif</a></p>
                             </li>
                         </ul>
-                    </div>
                 </div>
             </section>
             <section class="false-footer">
