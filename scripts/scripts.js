@@ -2,6 +2,28 @@
 const mq = (a) => window.matchMedia("(min-width: " + a +"px)").matches;
 const noSupportHas = !CSS.supports('selector(html:has(body))');
 
+const init = () => {
+    let slider = document.querySelector('.slider');
+    let buttonFoward = document.createElement("button");
+    let buttonBackward = document.createElement("button");
+    let rangeInput = document.createElement('input');
+
+    buttonFoward.textContent = "Suivant";
+    buttonFoward.className = "btn-slider btn-slider-foward";
+
+    buttonBackward.textContent = "Précédent";
+    buttonBackward.className = "btn-slider btn-slider-backward";
+
+    rangeInput.className = "range-move";
+    rangeInput.type = 'range';
+    rangeInput.min = 0;
+    rangeInput.value = 0;
+        
+    slider.append(buttonFoward);
+    slider.append(buttonBackward);
+    slider.append(rangeInput);
+}
+
 // Nav
 const animBurger = () => {
     if (!mq(768) && noSupportHas) {
@@ -61,22 +83,51 @@ const animProducts = () => {
 
 // Slider
 const animSlider = () => {
-    let slider = document.querySelector('.slider');
+    let innerSlider = document.querySelector('.inner-slider');
     let wrapper = document.querySelector('.offers');
     let offers = document.querySelectorAll('.offer');
+    let offerWidth = document.querySelector('.offer').offsetWidth + 12;
+    let rangeInput = document.querySelector('.range-move');
+    let buttonFoward = document.querySelector('.btn-slider-foward');
+    let buttonBackward = document.querySelector('.btn-slider-backward');
+    
+    let widthOffers = offers.length * offerWidth;
+    let maxScrollLeft = widthOffers - innerSlider.clientWidth;
 
-    slider.style.overflow = 'scroll';
-    wrapper.style.width = offers.length * 341 + 'px';
+    rangeInput.max = maxScrollLeft;
+    innerSlider.style.overflowX = 'hidden';
+    wrapper.style.width = widthOffers + 'px';
+
+    buttonFoward.addEventListener("click", (event) => {
+        let scrollLeftValue = innerSlider.scrollLeft;   
+        scrollLeftValue = Math.min(Math.max((scrollLeftValue + offerWidth), 0), maxScrollLeft);
+        innerSlider.scrollLeft = scrollLeftValue;
+        rangeInput.value = scrollLeftValue;
+    });
+
+    buttonBackward.addEventListener("click", (event) => {
+        let scrollLeftValue = innerSlider.scrollLeft;
+        scrollLeftValue = Math.min(Math.max((scrollLeftValue - offerWidth), 0), maxScrollLeft);
+        innerSlider.scrollLeft = scrollLeftValue;
+        rangeInput.value = scrollLeftValue;   
+    });
+
+    rangeInput.addEventListener("change", (event) => {
+        innerSlider.scrollLeft = rangeInput.value;
+    });
 }
 
 // Init
 window.addEventListener('DOMContentLoaded', (event) => {
+    init();
     animBurger();
     animProducts();
     animSlider();
 
     /* resize */
     addEventListener('resize', (event) => {
-        //console.log("test3") 
+        animBurger();
+        animProducts();
+        animSlider();
     });
 });

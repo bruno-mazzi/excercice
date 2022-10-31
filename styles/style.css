@@ -139,6 +139,7 @@ img {
     padding:4px 8px;
     position: sticky;
     top:0;
+    z-index: 40;
 }
 
 .logo {
@@ -412,10 +413,67 @@ img {
     margin:16px 32px;
 }
 
+.slider {
+    position: relative;
+}
+
+.inner-slider {
+    margin: 0 32px;
+    scroll-behavior: smooth;
+}
+
+.btn-slider {
+    border: 0;
+    bottom:0;
+    cursor: pointer;
+    position: absolute;
+    text-indent: -4875px;
+    top:0;
+    width:74px;
+}
+
+.btn-slider-backward {
+    background: url(../images/arrow-backward.png) center left no-repeat;
+    left:0;
+}
+
+.btn-slider-foward {
+    background: url(../images/arrow-foward.png) center right no-repeat;
+    right:0;
+}
+
+.range-move {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--shadow);
+    border-radius: 10px;
+    display: block;
+    height: 12px;
+    margin: 0 auto 16px auto;
+}
+
+.range-move::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--primary-color);
+    cursor: pointer;
+    height: 12px;
+    width: 24px;
+  }
+  
+  .range-move::-moz-range-thumb {
+    background: var(--primary-color);
+    border: 0;
+    cursor: pointer;
+    height: 12px;
+    width: 24px;
+  }
+
 .offers {
     list-style-type: none;
     margin: 0;
-    padding: 0 16px;
+    overflow: auto;
+    padding: 0;
     text-align: center;
 }
 
@@ -424,6 +482,7 @@ img {
     border-radius:20px;
     box-shadow: 0 0 4px var(--shadow);
     display: inline-grid;
+    float:left;
     grid-template-columns: 1fr;
     grid-template-rows: 45px 1fr 100px;
     margin:48px 6px 32px 6px;
@@ -687,6 +746,10 @@ img {
 
     .products-more a {
         text-transform: uppercase;
+    }
+
+    .range-move {
+        display:none;
     }
 
     .false-footer {
