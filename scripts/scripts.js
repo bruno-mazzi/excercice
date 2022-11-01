@@ -18,6 +18,7 @@ const init = () => {
     rangeInput.type = 'range';
     rangeInput.min = 0;
     rangeInput.value = 0;
+    rangeInput.setAttribute("aria-hidden", "true");
         
     slider.append(buttonFoward);
     slider.append(buttonBackward);
@@ -38,47 +39,44 @@ const animBurger = () => {
 // Products
 //  ul to select in desktop
 const animProducts = () => {
-    if (mq(768)) {
-        let falseTabs = document.querySelector('.false-tabs');
-        let firstLi = document.querySelector('.false-tabs li:first-child');
-        let selectedLi = document.querySelectorAll('.false-tabs li');
-        let subNav = document.querySelectorAll('.products');
+    let falseTabs = document.querySelector('.false-tabs');
+    //let firstLi = document.querySelector('.false-tabs li:first-child');
+    let selectedLi = document.querySelectorAll('.false-tabs li');
+    let subNav = document.querySelectorAll('.products');
 
-        falseTabs.addEventListener('click', function(e) {
-            falseTabs.classList.toggle('open-false-tabs');
-        });
+    falseTabs.addEventListener('click', function(e) {
+        falseTabs.classList.toggle('open-false-tabs');
+    });
 
-        selectedLi.forEach(el => {
-            el.addEventListener('click', function(e) {
-                let selectedValue = el.textContent;
-                let dataValue = el.dataset.products;
-                let firstLiContent = firstLi.textContent;
-                let firstLiData = firstLi.dataset.products;
+    selectedLi.forEach(el => {
+        el.addEventListener('click', function(e) {
+            let dataValue = el.dataset.products;
 
-                el.textContent = firstLiContent;
-                el.dataset.products = firstLiData;
-                firstLi.textContent = selectedValue;
-                firstLi.dataset.products = dataValue;
+            selectedLi.forEach(e => {
+                e.classList.remove('btn-tab-active')
+            });
 
-                subNav.forEach(e => {
-                    let subNavId = e.getAttribute('id');
+            el.classList.add('btn-tab-active');
 
-                    if(dataValue === subNavId) {
-                        e.classList.remove('sr-only')
-                    } else {
-                        e.classList.add('sr-only')
-                    }
-                });
-            }); 
-        });
+            subNav.forEach(e => {
+                let subNavId = e.getAttribute('id');
 
-        falseTabs.addEventListener('mouseleave', function(e) {
-            if (falseTabs.classList.contains('open-false-tabs')) {
-                falseTabs.classList.remove('open-false-tabs');
-            }
-        });
+                if(dataValue === subNavId) {
+                    e.classList.remove('sr-only')
+                } else {
+                    e.classList.add('sr-only')
+                }
+            });
+        }); 
+    });
 
-    }
+
+    falseTabs.addEventListener('mouseleave', function(e) {
+        if (falseTabs.classList.contains('open-false-tabs')) {
+            falseTabs.classList.remove('open-false-tabs');
+        }
+    });
+
 }
 
 // Slider
@@ -112,7 +110,7 @@ const animSlider = () => {
         rangeInput.value = scrollLeftValue;   
     });
 
-    rangeInput.addEventListener("change", (event) => {
+    rangeInput.addEventListener("input", (event) => {
         innerSlider.scrollLeft = rangeInput.value;
     });
 }
