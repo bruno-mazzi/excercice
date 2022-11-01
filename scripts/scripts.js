@@ -40,7 +40,6 @@ const animBurger = () => {
 //  ul to select in desktop
 const animProducts = () => {
     let falseTabs = document.querySelector('.false-tabs');
-    //let firstLi = document.querySelector('.false-tabs li:first-child');
     let selectedLi = document.querySelectorAll('.false-tabs li');
     let subNav = document.querySelectorAll('.products');
 
