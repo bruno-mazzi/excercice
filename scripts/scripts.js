@@ -1,6 +1,9 @@
+gsap.registerPlugin(ScrollTrigger);
+
 // function
 const mq = (a) => window.matchMedia("(min-width: " + a +"px)").matches;
 const noSupportHas = !CSS.supports('selector(html:has(body))');
+const motionSickness = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const init = () => {
     let slider = document.querySelector('.slider');
@@ -51,21 +54,30 @@ const animProducts = () => {
         el.addEventListener('click', function(e) {
             let dataValue = el.dataset.products;
 
-            selectedLi.forEach(e => {
-                e.classList.remove('btn-tab-active')
-            });
+            if(!el.classList.contains('btn-tab-active')) {
+                selectedLi.forEach(e => {
+                    e.classList.remove('btn-tab-active')
+                });
 
-            el.classList.add('btn-tab-active');
+                el.classList.add('btn-tab-active');
 
-            subNav.forEach(e => {
-                let subNavId = e.getAttribute('id');
+                subNav.forEach(e => {
+                    let subNavId = e.getAttribute('id');
+                    let subNavItems = e.querySelectorAll('.product');
 
-                if(dataValue === subNavId) {
-                    e.classList.remove('sr-only')
-                } else {
-                    e.classList.add('sr-only')
-                }
-            });
+                    if(dataValue === subNavId) {
+
+                        e.classList.remove('sr-only');
+
+                        if (!motionSickness.matches) {
+                            gsap.fromTo(subNavItems, {opacity:0,y: -50},{opacity:1, y: 0, stagger: 0.1});
+                        }
+
+                    } else {
+                        e.classList.add('sr-only');
+                    }
+                });
+            };
         }); 
     });
 
@@ -114,12 +126,58 @@ const animSlider = () => {
     });
 }
 
+// anim
+const animVisual = () => {
+    let parallax = () => {
+        let tl = gsap.timeline({scrollTrigger:{
+            trigger:"#main",
+            start:"150px 84px",
+            end:"250px 250px",
+            toggleActions:"restart none none reverse",
+            scrub: 0.3
+        }})
+        .to(".main-title", {y:50})
+        .to("#main", {backgroundPosition: "0px 25px"}, 0)
+    }
+
+    let scaleProducts = () => {
+        let productsMore = document.querySelector('.products-more');
+        let tl = gsap.timeline({ paused: true })
+        .to('.products-more > *', {scale:1.05})
+        .to('.icon-plus', {rotation:90, transformOrigin:"50% 50%"});
+
+        productsMore.addEventListener('mouseover', e => {
+            tl.play();
+        });
+
+        productsMore.addEventListener('mouseleave', e => {
+            tl.reverse();
+        });
+    }
+
+    if (!motionSickness || motionSickness.matches) {
+        //doSomethingWithoutAnimation();
+    } else {
+        parallax();
+        scaleProducts();
+    }
+
+    motionSickness.addEventListener("change", () => {
+        if (motionSickness.matches) {
+          //doSomethingWithoutAnimation();
+        } else {
+          //doSomethingWithAnimation();
+        }
+    });
+}
+
 // Init
 window.addEventListener('DOMContentLoaded', (event) => {
     init();
     animBurger();
     animProducts();
     animSlider();
+    animVisual();
 
     /* resize */
     addEventListener('resize', (event) => {
